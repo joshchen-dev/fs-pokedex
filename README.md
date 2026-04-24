@@ -18,4 +18,4 @@ Start by running `npm install` inside the project folder
 
 ---
 
-~~this line is used for initiating pull request~~
+~~this line is used for initiating pull request.~~

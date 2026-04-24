@@ -15,3 +15,7 @@ Start by running `npm install` inside the project folder
 ## Deployment Link
 
 [Render](https://fs-pokedex-11ou.onrender.com/)
+
+---
+
+~~this line is used for initiating pull request~~

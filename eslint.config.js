@@ -10,7 +10,8 @@ module.exports = [
       'eslint.config.js',
       '.eslintrc.js',
       'node_modules/**',
-      'dist/**'
+      'dist/**',
+      'playwright-report'
     ]
   },
   js.configs.recommended,
@@ -36,7 +37,12 @@ module.exports = [
     }
   },
   {
-    files: ['src/**/*.{js,jsx}', 'test/**/*.{js,jsx}'],
+    files: [
+      'src/**/*.{js,jsx}',
+      'test/**/*.{js,jsx}',
+      'e2e-tests/**/*.{js,jsx}',
+      'playwright.config.js'
+    ],
     plugins: {
       react,
       jest

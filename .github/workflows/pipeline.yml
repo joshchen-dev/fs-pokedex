@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
       - name: Run Playwright tests
         run: npx playwright test
       - uses: actions/upload-artifact@v4
@@ -51,11 +51,8 @@ jobs:
   tag_release:
     needs: [ simple_deployment_pipeline, e2e_test ]
     runs-on: ubuntu-latest
-    env:
-      COMMIT_MESSAGES:  ${{ join(github.event.commits.*.message, ' ')}}
-    if: ${{ github.event_name == 'push' && !contains('#skip', '${COMMIT_MESSAGES}') }}
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
     steps:
-      - run: echo ${COMMIT_MESSAGES}
       - uses: actions/checkout@v5
         with:
           fetch-depth: "0"

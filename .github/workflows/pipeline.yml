@@ -57,7 +57,7 @@ jobs:
     steps:
       - run: |
           echo ${{ !contains('#skip', '$COMMIT_MESSAGES') }}
-          echo '$COMMIT_MESSAGES'
+          echo ${{ env.COMMIT_MESSAGES }}
       - uses: actions/checkout@v5
         with:
           fetch-depth: "0"

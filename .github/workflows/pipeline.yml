@@ -55,6 +55,9 @@ jobs:
       COMMIT_MESSAGES:  ${{ join(github.event.commits.*.message, ' ')}}
     if: ${{ github.event_name == 'push' && !contains('#skip', '${COMMIT_MESSAGES}') }}
     steps:
+      - run: |
+          echo ${{ !contains('#skip', '${COMMIT_MESSAGES}') }}
+          echo '${COMMIT_MESAGES}'
       - uses: actions/checkout@v5
         with:
           fetch-depth: "0"

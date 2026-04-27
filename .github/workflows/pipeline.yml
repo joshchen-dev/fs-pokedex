@@ -15,11 +15,12 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: '24'
+          node-version: "24"
       - run: npm install
       - run: npm run eslint
       - run: npm run test
       - run: npm run build
+
   e2e_test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
@@ -31,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
       - name: Run Playwright tests
         run: npx playwright test
       - uses: actions/upload-artifact@v4
@@ -40,8 +41,24 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ success() && github.event_name == 'push' }}
     steps:
       - run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
-        if: success() && github.event_name == 'push' 
+
+  tag_release:
+    needs: [ simple_deployment_pipeline, e2e_test ]
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: "0"
+
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.75.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch

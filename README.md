@@ -18,4 +18,8 @@ Start by running `npm install` inside the project folder.
 
 ---
 
+## My own pipeline
+
+- [https://github.com/joshchen-dev/bloglist](https://github.com/joshchen-dev/bloglist)
+
 ~~this line is used for initiating pull request.~~
